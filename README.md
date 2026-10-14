@@ -77,21 +77,21 @@ graph TD
     subgraph Security Layer
         Gateway --> Auth["🔑 KeyEngine Middleware"]
         Auth -->|"HMAC-SHA256 Verification"| Valid{"Valid Key?"}
-        Valid -->|No| Reject["❌ 401 / 403 Forbidden"]
+        Valid -->|"No"| Reject["❌ 401 / 403 Forbidden"]
     end
 
     subgraph Storage & Cache
-        Valid -->|Yes| CacheCheck{"In Cache?"}
-        CacheCheck -->|Hit (<15ms)| ReturnCache["📦 Stream Cached ZIP/Lua"]
+        Valid -->|"Yes"| CacheCheck{"In Cache?"}
+        CacheCheck -->|"Hit - Under 15ms"| ReturnCache["📦 Stream Cached ZIP/Lua"]
     end
 
     subgraph Upstream Provider Pipeline
-        CacheCheck -->|Miss| DepotBox["🌐 DepotBox.org Engine"]
-        DepotBox -->|"connect.sid (Premium Bypass)"| Turnstile["🛡️ Cloudflare Turnstile Bypass"]
+        CacheCheck -->|"Cache Miss"| DepotBox["🌐 DepotBox.org Engine"]
+        DepotBox -->|"connect.sid - Premium Bypass"| Turnstile["🛡️ Cloudflare Turnstile Bypass"]
         Turnstile -->|"Job Polling & Download"| Success{"Downloaded?"}
-        Success -->|Yes| SaveCache["💾 Save to Disk & Memory Cache"]
+        Success -->|"Yes"| SaveCache["💾 Save to Disk & Memory Cache"]
         SaveCache --> ReturnCache
-        Success -->|Failed / Missing| Fallback["🔄 SteamCMD PICS & GitHub Mirrors"]
+        Success -->|"Failed / Missing"| Fallback["🔄 SteamCMD PICS & GitHub Mirrors"]
         Fallback --> DynamicCompile["⚙️ Dynamic Manifest & Lua Synthesis"]
         DynamicCompile --> SaveCache
     end
