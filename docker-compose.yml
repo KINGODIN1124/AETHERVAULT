@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  depotbox-api:
+    build: .
+    container_name: depotbox-manifest-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DEPOTBOX_COOKIE=${DEPOTBOX_COOKIE}
+      - API_MASTER_SECRET=${API_MASTER_SECRET}
+      - STATIC_API_KEYS=${STATIC_API_KEYS}
+      - PORT=8000
+      - HOST=0.0.0.0
+      - ENABLE_CACHE=true
+      - ENABLE_FALLBACK_MIRRORS=true
+    volumes:
+      - ./cache_storage:/app/cache_storage
+      - ./keys.json:/app/keys.json
