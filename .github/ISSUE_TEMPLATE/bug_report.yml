@@ -1,0 +1,31 @@
+name: 🐛 Bug Report
+description: File a bug report to help us improve DepotVault
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: appid
+    attributes:
+      label: Target Steam AppID
+      description: What Steam AppID were you trying to generate a manifest or Lua for?
+      placeholder: e.g. 730
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us what you expected to happen.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Log Output
+      description: Please copy and paste any relevant logs from the API server or CLI.
+      render: shell

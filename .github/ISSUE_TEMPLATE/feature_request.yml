@@ -1,0 +1,19 @@
+name: 💡 Feature Request
+description: Suggest an idea or new provider for DepotVault
+title: "[FEATURE]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Feature Description
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case / Motivation
+      description: Why is this feature needed and who would benefit from it?
+    validations:
+      required: true

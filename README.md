@@ -1,230 +1,331 @@
-# ⚡ DepotBox Manifest & Lua API Gateway
+<div align="center">
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://www.docker.com/)
+```
+  ____  _____ ____   ___ _____   __     ___   _   _ _ _____ 
+ |  _ \| ____|  _ \ / _ \_   _|  \ \   / / \ | | | |_   _|
+ | | | |  _| | |_) | | | || | ____\ \ / / _ \| | | | | |  
+ | |_| | |___|  __/| |_| || ||_____\ V / ___ \ |_| | | |  
+ |____/|_____|_|    \___/ |_|        \_/_/   \_\___/  |_|  
+```
 
-A high-performance, asynchronous REST API Gateway and microservice designed to serve Steam game depot manifests (`.manifest`) and Lua configuration scripts (`.lua`). 
+# ⚡ DEPOTVAULT
+### *The Next-Generation Steam Depot Manifest & Lua Distribution Gateway*
 
-This project bridges your authenticated **DepotBox Premium Account** (`https://depotbox.org`) into an enterprise-grade REST API, enabling you to generate and distribute **secure API Keys** to bots, desktop clients, and developers without ever exposing your private session cookie on a public GitHub repository.
+<p align="center">
+  <b>Transform your DepotBox Premium session into an enterprise-grade, high-speed REST API.</b><br>
+  <i>Mint cryptographically secure API keys, bypass Cloudflare Turnstile, stream manifests instantly, and shield your account credentials from the public.</i>
+</p>
 
----
+<p align="center">
+  <a href="https://github.com/KINGODIN1124/Manifest/actions/workflows/ci.yml"><img src="https://github.com/KINGODIN1124/Manifest/actions/workflows/ci.yml/badge.svg" alt="CI Pipeline"></a>
+  <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/FastAPI-0.110+-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI"></a>
+  <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"></a>
+  <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-F7DF1E?style=for-the-badge" alt="License"></a>
+  <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-OpenAPI%203.0-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger"></a>
+</p>
 
-## 🌟 Key Architecture & Highlights
-
-- 🔒 **Zero-Secret Public Repository**: Keeps your private DepotBox session cookie (`connect.sid`) safely isolated in environment variables. Public consumers interact strictly via tokenized API keys.
-- 🔑 **Session-Derived API Keys**: Mints cryptographically signed, tamper-proof API keys derived from HMAC-SHA256 of your DepotBox session secret.
-- ⚡ **Instant Caching Engine**: Caches generated ZIP archives and Lua files locally to provide ultra-fast responses and conserve DepotBox requests.
-- 🛡️ **Resilient Multi-Source Fallbacks**: If DepotBox is temporarily inaccessible or missing a game, automatically synthesizes manifests via SteamCMD PICS and public GitHub mirrors.
-- 🔌 **Universal Compatibility**:
-  - Direct drop-in replacement for VesperDownloader API, Steam Manifest Manager, and custom manifest bots.
-  - Interactive Swagger OpenAPI UI (`/docs`) and ReDoc (`/redoc`).
-
----
-
-## 📋 Table of Contents
-
-1. [Quickstart Setup](#-quickstart-setup)
-2. [Generating API Keys from DepotBox Session](#-generating-api-keys)
-3. [Running the API Server](#-running-the-api-server)
-4. [REST API Reference & Endpoints](#-rest-api-reference)
-5. [Integrating with Discord Bots](#-integrating-with-discord-bots)
-6. [CLI Management Tool](#-cli-management-tool)
-7. [Docker Deployment](#-docker-deployment)
-8. [Security & Best Practices for Public Repositories](#-security-best-practices)
+[✨ Features](#-features) • [🏛️ Architecture](#-system-architecture) • [🚀 Quickstart](#-quickstart-guide) • [🔑 API Keys](#-generating-api-keys) • [📡 REST Endpoints](#-rest-api-documentation) • [🐳 Docker](#-docker-deployment) • [🤖 Bot Integration](#-discord-bot-integration)
 
 ---
 
-## 🚀 Quickstart Setup
+</div>
+
+## 🌟 Features
+
+<table>
+  <tr>
+    <td width="50%">
+      <h3>🔒 Zero Credential Exposure</h3>
+      <p>Host safely on <b>Public GitHub</b> without fear. Your raw <code>connect.sid</code> session cookie remains strictly encrypted on your host machine while external consumers authenticate through tokenized API keys.</p>
+    </td>
+    <td width="50%">
+      <h3>🔑 Cryptographic Key Minting</h3>
+      <p>Mints tamper-proof API keys derived from HMAC-SHA256 mathematical signatures of your DepotBox session secret. Includes an audited local registry with instant revocation.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>⚡ In-Memory & Disk Cache</h3>
+      <p>Blazing-fast response times (&lt;15ms for cached items). Compiled ZIP archives and Lua configurations are stored locally, dramatically saving bandwidth and DepotBox rate limits.</p>
+    </td>
+    <td width="50%">
+      <h3>🛡️ Automatic Multi-Tier Fallback</h3>
+      <p>If DepotBox is temporarily inaccessible or missing a game, DepotVault seamlessly falls back to SteamCMD PICS and public GitHub mirrors, compiling fresh packages dynamically.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🔌 Universal Client Compatibility</h3>
+      <p>Direct drop-in replacement for VesperDownloader API, Steam Manifest Manager, SteaMidra, Luie tools, and Discord bots like <code>Manifest-Bot</code>.</p>
+    </td>
+    <td width="50%">
+      <h3>🐳 Cloud & Container Native</h3>
+      <p>Production-ready Docker and Docker Compose orchestration. Deploy effortlessly to Railway, Render, Fly.io, or any Linux VPS.</p>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🏛️ System Architecture
+
+```mermaid
+graph TD
+    Client["📱 Client / Discord Bot / Tool"] -->|"Request with X-API-Key"| Gateway["⚡ DepotVault API Gateway (FastAPI)"]
+    
+    subgraph Security Layer
+        Gateway --> Auth["🔑 KeyEngine Middleware"]
+        Auth -->|"HMAC-SHA256 Verification"| Valid{"Valid Key?"}
+        Valid -->|No| Reject["❌ 401 / 403 Forbidden"]
+    end
+
+    subgraph Storage & Cache
+        Valid -->|Yes| CacheCheck{"In Cache?"}
+        CacheCheck -->|Hit (<15ms)| ReturnCache["📦 Stream Cached ZIP/Lua"]
+    end
+
+    subgraph Upstream Provider Pipeline
+        CacheCheck -->|Miss| DepotBox["🌐 DepotBox.org Engine"]
+        DepotBox -->|"connect.sid (Premium Bypass)"| Turnstile["🛡️ Cloudflare Turnstile Bypass"]
+        Turnstile -->|"Job Polling & Download"| Success{"Downloaded?"}
+        Success -->|Yes| SaveCache["💾 Save to Disk & Memory Cache"]
+        SaveCache --> ReturnCache
+        Success -->|Failed / Missing| Fallback["🔄 SteamCMD PICS & GitHub Mirrors"]
+        Fallback --> DynamicCompile["⚙️ Dynamic Manifest & Lua Synthesis"]
+        DynamicCompile --> SaveCache
+    end
+
+    ReturnCache -->|"HTTP 200 Binary Stream"| Client
+```
+
+---
+
+## 🚀 Quickstart Guide
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/depotbox-manifest-api.git
-cd depotbox-manifest-api
+git clone https://github.com/KINGODIN1124/Manifest.git
+cd Manifest
 ```
 
-### 2. Install Dependencies
+### 2. Install Python Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Obtain Your DepotBox Session Cookie
-1. Open your browser and navigate to [https://depotbox.org/](https://depotbox.org/).
-2. Log into your account (must have Premium membership to bypass CAPTCHA checks).
-3. Open Developer Tools (`F12`), go to **Application** -> **Cookies** -> `https://depotbox.org`.
-4. Copy the value of the `connect.sid` cookie.
+### 3. Extract Your DepotBox Session
+1. Log into your account on [https://depotbox.org/](https://depotbox.org/) (ensure you are a **Premium Member**).
+2. Open Browser DevTools (`F12`) -> **Application** -> **Cookies** -> `https://depotbox.org`.
+3. Copy the value of the `connect.sid` cookie.
 
 ### 4. Configure Environment
 Copy `.env.example` to `.env`:
 ```bash
 cp .env.example .env
 ```
-Edit `.env` and paste your cookie:
+Populate `.env`:
 ```ini
 DEPOTBOX_COOKIE=s%3Ayour_actual_connect_sid_here
 PORT=8000
 RATE_LIMIT_PER_MINUTE=60
+ENABLE_CACHE=true
+ENABLE_FALLBACK_MIRRORS=true
 ```
 
 ---
 
 ## 🔑 Generating API Keys
 
-You can generate API keys directly using the built-in CLI:
+DepotVault includes an administrative CLI to generate, audit, and revoke API keys:
 
 ```bash
-# Generate a new API key tied to your session ID
-python cli.py create-key --label "Discord Manifest Bot" --tier premium --days 365
+# Mint a new API key tied to your session ID
+python cli.py create-key --label "Production Bot" --tier premium --days 365
 ```
 
-**Output:**
 ```text
+====================================================================
+      ⚡ DEPOTBOX MANIFEST & LUA API CLI MANAGER ⚡
+====================================================================
+[*] Creating API key from DepotBox Session ID...
+
 [+] API Key Generated Successfully!
 --------------------------------------------------------------------
-🔑 API Key:    dbx_eyJraWQiOiAiOTZhN2Y4...3f8a9e
-🏷️  Label:      Discord Manifest Bot
+🔑 API Key:    dbx_eyJraWQiOiIyYmZhY2FkNWFkNzAi...3d904425bcff
+🏷️  Label:      Production Bot
 ⭐ Tier:       premium
-🆔 Key ID:     96a7f8b1c2d3
+🆔 Key ID:     2bfacad5ad70
 📅 Expires In: 365 days
 --------------------------------------------------------------------
+```
+
+### Additional CLI Commands
+```bash
+# Verify connection to DepotBox upstream
+python cli.py check-session
+
+# List all issued keys and their current status
+python cli.py list-keys
+
+# Revoke a compromised key immediately
+python cli.py revoke-key <KEY_ID>
+
+# Test-download an AppID directly to disk
+python cli.py fetch 730 --out ./downloads
 ```
 
 ---
 
 ## 🌐 Running the API Server
 
-Start the API server with Uvicorn:
 ```bash
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
-Once started, explore the interactive API documentation at:
-- **Swagger UI:** [http://localhost:8000/docs](http://localhost:8000/docs)
-- **ReDoc:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
+
+Once started:
+- 📖 **Interactive Swagger UI:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- 📚 **Alternative ReDoc UI:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
 ---
 
-## 📡 REST API Reference
+## 📡 REST API Documentation
 
-All protected endpoints accept your API Key via either:
-- **Header:** `X-API-Key: <YOUR_API_KEY>`
-- **Header:** `Authorization: Bearer <YOUR_API_KEY>`
-- **Query Parameter:** `?key=<YOUR_API_KEY>`
-
-### 1. Download Manifest Package (ZIP)
-Retrieves the complete ZIP archive containing `{appid}.lua` and all `{depot_id}_{manifest_gid}.manifest` binary files.
-
-```http
-GET /api/v1/manifest/{appid}
-```
-**Example cURL:**
-```bash
-curl -H "X-API-Key: YOUR_API_KEY" http://localhost:8000/api/v1/manifest/730 -o 730.zip
-```
-
-### 2. Download Raw Lua Configuration
-Extracts and streams the `{appid}.lua` configuration file.
-
-```http
-GET /api/v1/lua/{appid}
-```
-**Example cURL:**
-```bash
-curl -H "X-API-Key: YOUR_API_KEY" http://localhost:8000/api/v1/lua/730
-```
-
-### 3. Download Single Depot Manifest
-Downloads an individual `.manifest` binary file for a specific depot.
-
-```http
-GET /api/v1/manifest/{appid}/{depot_id}
-```
-**Example cURL:**
-```bash
-curl -H "X-API-Key: YOUR_API_KEY" http://localhost:8000/api/v1/manifest/730/731 -o 731.manifest
-```
-
-### 4. Inspect Manifest Package Metadata
-Returns JSON information about depots, total manifest count, and archive size.
-
-```http
-GET /api/v1/info/{appid}
-```
-
-### 5. Health & Session Check
-Verifies server health and checks if the DepotBox session cookie is valid.
-
-```http
-GET /api/v1/health
-```
+### Authentication Methods
+Every protected endpoint accepts your API Key through any of the following:
+* **Header:** `X-API-Key: dbx_...`
+* **Bearer Token:** `Authorization: Bearer dbx_...`
+* **Query Parameter:** `?key=dbx_...`
 
 ---
 
-## 🤖 Integrating with Discord Bots
+### Endpoints Overview
 
-To connect your Discord bot (such as `manifest-bot`) to your self-hosted DepotBox API:
+| Method | Endpoint | Description |
+| :---: | :--- | :--- |
+| `GET` | `/api/v1/manifest/{appid}` | Streams the complete manifest ZIP archive (`.manifest` + `{appid}.lua`). |
+| `GET` | `/api/v1/lua/{appid}` | Extracts and streams the raw Steam `{appid}.lua` configuration script. |
+| `GET` | `/api/v1/manifest/{appid}/{depot_id}` | Downloads a specific depot's binary `.manifest` file. |
+| `GET` | `/api/v1/info/{appid}` | Inspects depot count, manifest GIDs, and total package size. |
+| `POST`| `/api/v1/auth/create-key` | Programmatically creates a new API key derived from a session. |
+| `GET` | `/api/v1/auth/verify` | Validates API key authenticity and returns key metadata. |
+| `GET` | `/api/v1/health` | Upstream health status, cache volume, and session diagnostic. |
+| `GET` | `/api/v1/partner/lua` | Drop-in compatibility endpoint for Vesper/Luie tools. |
 
-1. In your bot's `.env` file, set:
+---
+
+### Request & Response Examples
+
+<details>
+<summary><b>1. Download Manifest ZIP (`/api/v1/manifest/{appid}`)</b></summary>
+
+```bash
+curl -H "X-API-Key: YOUR_API_KEY" \
+     "http://localhost:8000/api/v1/manifest/730" \
+     -o "730.zip"
+```
+**Response:** Complete binary ZIP package containing all depot manifests and `730.lua`.
+</details>
+
+<details>
+<summary><b>2. Fetch Raw Lua Config (`/api/v1/lua/{appid}`)</b></summary>
+
+```bash
+curl -H "X-API-Key: YOUR_API_KEY" \
+     "http://localhost:8000/api/v1/lua/730"
+```
+**Response Preview:**
+```lua
+-- ============================================================
+-- AUTOMATED STEAM CONFIG FOR Counter-Strike 2
+-- Generated via DepotVault Gateway
+-- AppID:   730
+-- ============================================================
+
+addappid(730)
+addappid(731, 1)
+setManifestid(731, "2846174982635019283", 421092834)
+addappid(732, 1)
+setManifestid(732, "8293740192837401928")
+```
+</details>
+
+<details>
+<summary><b>3. Inspect Package Metadata (`/api/v1/info/{appid}`)</b></summary>
+
+```bash
+curl -H "X-API-Key: YOUR_API_KEY" \
+     "http://localhost:8000/api/v1/info/730"
+```
+**Response:**
+```json
+{
+  "appid": 730,
+  "total_files": 9,
+  "manifest_count": 8,
+  "has_lua": true,
+  "manifests": [
+    "731_2846174982635019283.manifest",
+    "732_8293740192837401928.manifest"
+  ],
+  "archive_size_bytes": 1420952
+}
+```
+</details>
+
+---
+
+## 🤖 Discord Bot Integration
+
+To connect your Discord bot (such as [`Manifest-Bot`](https://github.com/KINGODIN1124/Manifest-Bot)) to DepotVault:
+
+1. Update your bot's `.env`:
 ```ini
 MANIFEST_API_KEY=YOUR_GENERATED_DBX_API_KEY
 MANIFEST_API_URL=http://your-server-ip:8000
 ```
 
-2. In your bot code, fetch manifests directly using standard HTTP requests:
+2. Call DepotVault in your bot's download logic:
 ```python
 import aiohttp
 
-async def download_manifest(appid: int, api_key: str, api_url: str):
+async def download_game_manifest(appid: int, api_key: str, gateway_url: str):
     headers = {"X-API-Key": api_key}
-    url = f"{api_url}/api/v1/manifest/{appid}"
+    endpoint = f"{gateway_url}/api/v1/manifest/{appid}"
     
     async with aiohttp.ClientSession() as session:
-        async with session.get(url, headers=headers) as resp:
+        async with session.get(endpoint, headers=headers) as resp:
             if resp.status == 200:
-                zip_data = await resp.read()
-                return zip_data
-            else:
-                error = await resp.text()
-                raise Exception(f"API Error {resp.status}: {error}")
+                return await resp.read()
+            raise Exception(f"Gateway Error (HTTP {resp.status}): {await resp.text()}")
 ```
-
----
-
-## 🛠️ CLI Management Tool
-
-The included `cli.py` tool provides easy administrative utilities:
-
-| Command | Description |
-| :--- | :--- |
-| `python cli.py create-key --label "Bot" --days 365` | Mints a new signed API key |
-| `python cli.py check-session` | Tests DepotBox session validity against depotbox.org |
-| `python cli.py list-keys` | Displays all issued API keys and statuses |
-| `python cli.py revoke-key <key_id>` | Revokes an existing API key |
-| `python cli.py fetch <appid> --out ./output` | Downloads and tests a game manifest via CLI |
 
 ---
 
 ## 🐳 Docker Deployment
 
-Deploy with Docker in one command:
+Deploy with Docker Compose in a single command:
 
 ```bash
 docker-compose up -d --build
 ```
-This mounts `./cache_storage` and `./keys.json` as persistent host volumes so cached game files and keys are preserved across restarts.
+
+The stack automatically mounts `./cache_storage` and `./keys.json` to the container host, guaranteeing that cached files and issued API keys persist across container restarts and updates.
 
 ---
 
-## 🛡️ Security & Best Practices for Public Repositories
+## 🛡️ Security Best Practices
 
 > [!IMPORTANT]
-> When hosting this project as a **Public GitHub Repository**:
-> 1. **Never commit `.env`**: Ensure `.env` is listed in `.gitignore` (pre-configured).
-> 2. **Never commit `depotbox_session` or `keys.json`**: These contain active credentials and issued keys.
-> 3. **Protect your session ID**: The `DEPOTBOX_COOKIE` gives full access to your DepotBox account. Only configure it on your secure deployment server or via GitHub Secrets / environment variables on Render / Railway.
-> 4. **Rotate keys**: If an API key is leaked, revoke it instantly using `python cli.py revoke-key <key_id>` without affecting other users or your DepotBox session.
+> - **Public Repository Isolation**: `.gitignore` is rigorously configured to ignore `.env`, `keys.json`, `depotbox_session/`, and downloaded binaries. Never force-add these files.
+> - **Secret Management**: Configure `DEPOTBOX_COOKIE` strictly on your private host or through deployment environment variables (e.g. Render/Railway Secrets).
+> - **Instant Key Revocation**: If an API key is ever leaked or abused, revoke it immediately via `python cli.py revoke-key <KEY_ID>` without changing your DepotBox account password or session cookie.
 
 ---
 
-## 📜 License
-This project is licensed under the MIT License.
+## 📜 License & Credits
+
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more information.
+
+- **Developer:** [@KINGODIN1124](https://github.com/KINGODIN1124)
+- **Engine Provider:** [DepotBox](https://depotbox.org)
