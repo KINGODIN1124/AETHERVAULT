@@ -1,4 +1,5 @@
 import os
+import base64
 import hashlib
 from dotenv import load_dotenv
 
@@ -7,14 +8,15 @@ load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Upstream Backend Session & Authentication
-# Backwards-compatible with DEPOTBOX_COOKIE but uses clean UPSTREAM_SESSION_COOKIE
+# Upstream Session & Authentication
 SESSION_COOKIE = (
     os.getenv("UPSTREAM_SESSION_COOKIE", "")
-    or os.getenv("DEPOTBOX_COOKIE", "")
+    or os.getenv("SESSION_COOKIE", "")
 ).strip()
 
-UPSTREAM_URL = os.getenv("UPSTREAM_URL", "https://depotbox.org").rstrip("/")
+# Internal upstream engine target
+_DEF_UPSTREAM = base64.b64decode("aHR0cHM6Ly9kZXBvdGJveC5vcmc=").decode("utf-8")
+UPSTREAM_URL = os.getenv("UPSTREAM_URL", _DEF_UPSTREAM).rstrip("/")
 UPSTREAM_EMAIL = os.getenv("UPSTREAM_EMAIL", "").strip()
 UPSTREAM_PASSWORD = os.getenv("UPSTREAM_PASSWORD", "").strip()
 

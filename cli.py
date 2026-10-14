@@ -4,7 +4,7 @@ import argparse
 import asyncio
 import json
 
-# Ensure python path includes the depotbox-api directory
+# Ensure python path includes project root
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 if sys.platform == "win32":

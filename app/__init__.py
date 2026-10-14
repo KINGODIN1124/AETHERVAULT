@@ -1,1 +1,1 @@
-"""DepotBox Manifest & Lua API Application Package"""
+"""AetherVault Manifest & Lua API Application Package"""

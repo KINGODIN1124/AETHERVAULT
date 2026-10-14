@@ -98,7 +98,7 @@ class FallbackEngine:
         lua_lines = [
             "-- ============================================================",
             f"-- AUTOMATED STEAM CONFIG FOR {actual_name}",
-            f"-- Generated via DepotBox API Gateway",
+            f"-- Generated via AetherVault Gateway",
             f"-- AppID:   {appid}",
             f"-- Date:    {now_str}",
             "-- ============================================================",

@@ -44,22 +44,19 @@ class SessionRefresher:
 
             new_lines = []
             updated_upstream = False
-            updated_depotbox = False
 
             for line in lines:
                 if line.strip().startswith("UPSTREAM_SESSION_COOKIE="):
                     new_lines.append(f"UPSTREAM_SESSION_COOKIE={new_cookie}\n")
                     updated_upstream = True
-                elif line.strip().startswith("DEPOTBOX_COOKIE="):
-                    new_lines.append(f"DEPOTBOX_COOKIE={new_cookie}\n")
-                    updated_depotbox = True
+                elif line.strip().startswith("SESSION_COOKIE="):
+                    new_lines.append(f"SESSION_COOKIE={new_cookie}\n")
+                    updated_upstream = True
                 else:
                     new_lines.append(line)
 
             if not updated_upstream:
                 new_lines.append(f"UPSTREAM_SESSION_COOKIE={new_cookie}\n")
-            if not updated_depotbox:
-                new_lines.append(f"DEPOTBOX_COOKIE={new_cookie}\n")
 
             with open(ENV_FILE, "w", encoding="utf-8") as f:
                 f.writelines(new_lines)

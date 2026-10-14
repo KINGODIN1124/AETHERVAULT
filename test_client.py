@@ -1,5 +1,5 @@
 """
-Example client script showing how to consume the DepotBox Manifest & Lua API
+Example client script showing how to consume the AetherVault Manifest & Lua API
 using Python and an API Key.
 """
 
@@ -11,11 +11,11 @@ API_BASE_URL = os.getenv("API_URL", "http://localhost:8000")
 API_KEY = os.getenv("API_KEY", "YOUR_GENERATED_API_KEY_HERE")
 
 def test_api():
-    print(f"[*] Testing DepotBox Manifest API at: {API_BASE_URL}")
+    print(f"[*] Testing AetherVault Manifest API at: {API_BASE_URL}")
 
     headers = {
         "X-API-Key": API_KEY,
-        "User-Agent": "DepotBox-Test-Client/1.0"
+        "User-Agent": "AetherVault-Test-Client/1.0"
     }
 
     # 1. Health check (no auth required)

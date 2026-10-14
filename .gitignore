@@ -5,8 +5,8 @@
 *.env
 
 # Authentication, Keys & Session Storage
-depotbox_session/
 session_storage/
+browser_session/
 keys.json
 keys_backup.json
 banned_ips.json
