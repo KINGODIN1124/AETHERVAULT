@@ -13,196 +13,207 @@
 ### *The Next-Generation Steam Depot Manifest & Lua Distribution Gateway*
 
 <p align="center">
-  <b>High-speed, enterprise-grade REST API providing instant access to Steam game depot manifests and Lua scripts.</b><br>
-  <i>Built for developers, bot creators, and game management toolsets with cryptographic key authentication, in-memory caching, anti-scraping IP defense, and automated session rejuvenation.</i>
+  <b>High-speed, enterprise-grade public gateway providing instant access to Steam game depot manifests and Lua scripts.</b><br>
+  <i>Built for developers, bot creators, and game management tools to easily integrate manifest archives and configs with high availability.</i>
 </p>
 
 <p align="center">
-  <a href="https://github.com/KINGODIN1124/Manifest/actions/workflows/ci.yml"><img src="https://github.com/KINGODIN1124/Manifest/actions/workflows/ci.yml/badge.svg" alt="CI Pipeline"></a>
-  <a href="https://fastapi.tiangolo.com"><img src="https://img.shields.io/badge/FastAPI-0.110+-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI"></a>
-  <a href="https://www.python.org"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"></a>
-  <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"></a>
+  <a href="https://discord.gg/rhWuMYnapB"><img src="https://img.shields.io/badge/Discord-Infinity%20Heaven-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-F7DF1E?style=for-the-badge" alt="License"></a>
   <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-OpenAPI%203.0-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Status-Online%20(99.9%25)-00C853?style=for-the-badge" alt="Status"></a>
 </p>
 
-[✨ Try the Public Key](#-public-community-api-key-7-day-trial) • [🎁 1-Month Discord Key](#-want-1-month-extended-access-join-our-discord) • [🏛️ Architecture](#-system-architecture) • [🛡️ Anti-Scraping](#-anti-scraping-shield--ip-defense) • [📡 API Reference](#-rest-api-documentation) • [🤖 Discord Bot](#-discord-bot-1-month-key-claim-system)
+[✨ 7-Day Public Trial Key](#-7-day-public-trial-key) • [🎁 1-Month Extended Access](#-want-1-month-extended-access-join-infinity-heaven) • [🏛️ Overview](#-gateway-overview) • [🛠️ Integration Guide](#-integration-guide) • [📡 REST API Reference](#-rest-api-documentation) • [💬 Community](#-official-community)
 
 ---
 
 </div>
 
-## 🎁 Public Community API Key (7-Day Trial)
+## 🎁 7-Day Public Trial Key
 
-To test AetherVault immediately in your own tool, Discord bot, or script, use our active **Public Community Trial Key**:
+To test AetherVault immediately in your own tools, bots, or custom loaders, use our active **Public Community Trial Key**:
 
 ```http
-API Key: av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdHkgVHJpYWwiLCJ0aWVyIjoicHVibGljX3RyaWFsIiwiaWF0IjoxNzkxOTc0NDkzLCJleHAiOjE3OTI1NzkyOTN9.33dbe57879d144d332a0e60abe94f89d
+av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdHkgVHJpYWwiLCJ0aWVyIjoicHVibGljX3RyaWFsIiwiaWF0IjoxNzkxOTc0NDkzLCJleHAiOjE3OTI1NzkyOTN9.33dbe57879d144d332a0e60abe94f89d
 ```
 
 | Parameter | Policy |
 | :--- | :--- |
-| **Validity** | **7 Days** (Public Community Trial) |
-| **Daily Quota** | **30 requests / 24 hours** per IP |
-| **Burst Threshold** | Maximum 5 requests / second (Strict anti-scraping enforced) |
-| **Payload Format** | Complete `.zip` (with `.manifest` binaries & compiled `{appid}.lua`) |
+| **Access Tier** | **7-Day Public Community Trial** |
+| **Daily Quota** | **30 requests / 24 hours** |
+| **Payload Content** | Complete `.zip` (with all depot `.manifest` binaries & compiled `{appid}.lua`) |
+| **Response Time** | Ultra-fast (&lt; 20ms for cached titles) |
 
 ### Quick Test in cURL:
 ```bash
 curl -H "X-API-Key: av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdHkgVHJpYWwiLCJ0aWVyIjoicHVibGljX3RyaWFsIiwiaWF0IjoxNzkxOTc0NDkzLCJleHAiOjE3OTI1NzkyOTN9.33dbe57879d144d332a0e60abe94f89d" \
-     "http://localhost:8000/api/v1/manifest/730" \
+     "http://YOUR_GATEWAY_URL/api/v1/manifest/730" \
      -o "730.zip"
 ```
 
 ---
 
-## 🚀 Want 1-Month Extended Access? Join Our Discord!
+## 🚀 Want 1-Month Extended Access? Join Infinity Heaven!
 
-Need more than 30 requests per day? You can claim a **1-Month Extended Access Key** for **FREE** by joining our Discord community:
+Need more than 30 requests per day for your project? Claim a **1-Month Extended Access Key** for **FREE** by joining the **Infinity Heaven** community:
 
-[![Join Discord](https://img.shields.io/badge/Discord-Join%20Our%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/crackworld)
+<p align="center">
+  <a href="https://discord.gg/rhWuMYnapB">
+    <img src="https://img.shields.io/badge/Join%20Infinity%20Heaven-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" height="40" alt="Join Infinity Heaven">
+  </a><br>
+  👉 <a href="https://discord.gg/rhWuMYnapB"><b>https://discord.gg/rhWuMYnapB</b></a>
+</p>
 
-### Perks of 1-Month Discord Member Key:
+### Perks of 1-Month Infinity Heaven Key:
 - ⚡ **150 Requests per day** (5x higher limit)
 - 📅 **Valid for 30 Full Days**
-- 🛡️ **Priority Queue & Instant Redundancy**
-- 🤖 **How to claim:** Simply type `/claimkey` in the bot channel on our Discord server!
+- 🔑 **Dedicated Private API Key**
+- 💬 **Direct support & request assistance in the server**
 
 ---
 
-## 🌟 Core Features
+## 🏛️ Gateway Overview
+
+AetherVault serves as a unified distribution layer designed for seamless manifest delivery:
+
+```mermaid
+graph LR
+    Client["📱 Your Tool / Bot / Script"] -->|"GET Request with X-API-Key"| Gateway["⚡ AetherVault Gateway"]
+    Gateway -->|"In-Memory Cache Hit (<20ms)"| FastReturn["📦 Complete ZIP / Lua Stream"]
+    Gateway -->|"Live Synchronization"| Upstream["🔄 Live Steam Metadata & Manifest Engine"]
+    Upstream --> FastReturn
+    FastReturn --> Client
+```
 
 <table>
   <tr>
     <td width="50%">
-      <h3>🔒 Cryptographic Token Minting</h3>
-      <p>API keys are mathematically signed using HMAC-SHA256, allowing stateless validation while recording usage in a tamper-resistant local registry.</p>
+      <h3>⚡ Instant Caching</h3>
+      <p>Repeated requests for popular titles return from memory in under 20 milliseconds, delivering rapid downloads for your users.</p>
     </td>
     <td width="50%">
-      <h3>🛡️ Anti-Scraping & Auto-IP Ban</h3>
-      <p>Automated shield monitoring burst requests. Rapid sequential crawlers (> 5 req/s) or malicious scanners are instantly blacklisted and banned for 24 hours.</p>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <h3>🔄 Automated Session Rejuvenation</h3>
-      <p>Never worry about session expiration. Built-in headless Playwright engine automatically detects expired cookies, signs back in, and updates secrets without downtime.</p>
-    </td>
-    <td width="50%">
-      <h3>⚡ In-Memory & Disk Cache</h3>
-      <p>Lightning-fast delivery (&lt;15ms for cached packages). Preserves server bandwidth and keeps response latency near-instantaneous.</p>
+      <h3>📦 Complete Manifest Packages</h3>
+      <p>Each download bundles both the binary <code>.manifest</code> depot files and the corresponding Steam <code>{appid}.lua</code> configuration ready for local deployment.</p>
     </td>
   </tr>
   <tr>
     <td width="50%">
       <h3>🌐 Multi-Source Redundancy</h3>
-      <p>If the upstream engine is missing an AppID, AetherVault automatically queries SteamCMD PICS and public GitHub mirrors, compiling fresh packages dynamically.</p>
+      <p>Automatic fallback engine cross-references live SteamCMD PICS and public repository mirrors to guarantee consistent game availability.</p>
     </td>
     <td width="50%">
-      <h3>🤖 Built-in Discord Bot Key System</h3>
-      <p>Includes a ready-to-run Discord Bot with the <code>/claimkey</code> command so your community members can generate their own 1-month keys automatically.</p>
+      <h3>🔌 Plug-and-Play Integration</h3>
+      <p>Standardized HTTP interface compatible with Discord bots, desktop managers, SteamREtools, and custom CLI downloaders.</p>
     </td>
   </tr>
 </table>
 
 ---
 
-## 🏛️ System Architecture
+## 🛠️ Integration Guide
 
-```mermaid
-graph TD
-    Client["📱 Client / Discord Bot / Tool"] -->|"Request with X-API-Key"| Gateway["⚡ AetherVault API Gateway (FastAPI)"]
-    
-    subgraph Security Layer
-        Gateway --> Shield["🛡️ Anti-Scraping & IP Shield"]
-        Shield -->|"Check IP Blacklist & Burst"| Banned{"Banned / Scraping?"}
-        Banned -->|"Yes"| Block["🚫 403 Forbidden (Auto-Banned 24h)"]
-        Banned -->|"No"| Auth["🔑 KeyEngine Token Verifier"]
-        Auth -->|"HMAC-SHA256 Verification"| Valid{"Valid Key?"}
-        Valid -->|"No"| Reject["❌ 401 Unauthorized"]
-        Valid -->|"Yes"| Quota{"Daily Quota OK?"}
-        Quota -->|"Exceeded"| LimitErr["⚠️ 429 Too Many Requests"]
-    end
+### 1. Python (`requests`)
+```python
+import requests
 
-    subgraph Storage & Cache
-        Quota -->|"Passed"| CacheCheck{"In Cache?"}
-        CacheCheck -->|"Hit - Under 15ms"| ReturnCache["📦 Stream Cached ZIP/Lua"]
-    end
+API_KEY = "av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTki..."
+GATEWAY_URL = "http://YOUR_GATEWAY_URL"
+APP_ID = 730  # Counter-Strike 2
 
-    subgraph Upstream Pipeline
-        CacheCheck -->|"Cache Miss"| UpstreamEngine["🌐 Upstream Manifest Engine"]
-        UpstreamEngine -->|"Job Polling & Download"| Success{"Downloaded?"}
-        Success -->|"Yes"| SaveCache["💾 Save to Disk & Memory Cache"]
-        SaveCache --> ReturnCache
-        Success -->|"Session Expired"| Rejuvenate["🔄 Automated Headless Login & Refresh"]
-        Rejuvenate --> UpstreamEngine
-        Success -->|"Failed / Missing"| Fallback["🔄 SteamCMD PICS & GitHub Mirrors"]
-        Fallback --> DynamicCompile["⚙️ Dynamic Manifest & Lua Synthesis"]
-        DynamicCompile --> SaveCache
-    end
+headers = {"X-API-Key": API_KEY}
 
-    ReturnCache -->|"HTTP 200 Binary Stream"| Client
+# Download complete manifest ZIP
+response = requests.get(f"{GATEWAY_URL}/api/v1/manifest/{APP_ID}", headers=headers, stream=True)
+if response.status_code == 200:
+    with open(f"{APP_ID}.zip", "wb") as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            f.write(chunk)
+    print(f"Manifest package saved to {APP_ID}.zip!")
 ```
 
----
+### 2. Python Asynchronous (`aiohttp`)
+```python
+import aiohttp
+import asyncio
 
-## 🛡️ Anti-Scraping Shield & IP Defense
+async def fetch_manifest(appid: int, api_key: str, gateway_url: str):
+    headers = {"X-API-Key": api_key}
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"{gateway_url}/api/v1/manifest/{appid}", headers=headers) as resp:
+            if resp.status == 200:
+                data = await resp.read()
+                with open(f"{appid}.zip", "wb") as f:
+                    f.write(data)
+                print(f"Successfully downloaded {appid}.zip ({len(data):,} bytes)")
+            else:
+                print(f"Error {resp.status}: {await resp.text()}")
 
-To prevent aggressive scraping and protect server resources, AetherVault includes a strict real-time defense layer:
+# asyncio.run(fetch_manifest(730, "YOUR_API_KEY", "http://YOUR_GATEWAY_URL"))
+```
 
-1. **Burst Scraping Detection:** Any client IP sending more than 5 requests per second is flagged as an automated scraper.
-2. **24-Hour IP Blacklist:** The offending IP is immediately banned for 24 hours (`HTTP 403 Forbidden`).
-3. **Malicious Tool Filtering:** Automatic blocking of automated scanner signatures (e.g. `sqlmap`, `scrapy`, `nikto`).
-4. **Administrative Controls:** Manage blacklist via CLI:
-   ```bash
-   # View blacklisted IPs
-   python cli.py list-banned
+### 3. JavaScript / Node.js (`fetch`)
+```javascript
+const fs = require('fs');
 
-   # Unban an IP address
-   python cli.py unban 192.168.1.50
+async function downloadManifest(appId, apiKey, gatewayUrl) {
+  const response = await fetch(`${gatewayUrl}/api/v1/manifest/${appId}`, {
+    headers: { 'X-API-Key': apiKey }
+  });
 
-   # Manually ban an abusive IP
-   python cli.py ban 192.168.1.50 --reason "Abusive scraping"
-   ```
+  if (response.ok) {
+    const buffer = Buffer.from(await response.arrayBuffer());
+    fs.writeFileSync(`${appId}.zip`, buffer);
+    console.log(`Saved ${appId}.zip!`);
+  } else {
+    console.error(`Failed: ${response.status} ${await response.text()}`);
+  }
+}
+```
+
+### 4. Discord Bot (`.env`)
+If you run a Discord manifest bot (such as `Manifest-Bot`), simply configure your `.env`:
+```ini
+MANIFEST_API_KEY=av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTki...
+MANIFEST_API_URL=http://YOUR_GATEWAY_URL
+```
 
 ---
 
 ## 📡 REST API Documentation
 
 ### Authentication Methods
-Supply your API key via any of the following:
-* **Header:** `X-API-Key: av_...`
-* **Bearer Token:** `Authorization: Bearer av_...`
-* **Query Parameter:** `?key=av_...`
+Authenticate your requests using any of the following formats:
+* **Header:** `X-API-Key: YOUR_API_KEY`
+* **Bearer Token:** `Authorization: Bearer YOUR_API_KEY`
+* **Query Parameter:** `?key=YOUR_API_KEY`
 
 ---
 
-### Endpoints Overview
+### Endpoints
 
 | Method | Endpoint | Description |
 | :---: | :--- | :--- |
-| `GET` | `/api/v1/manifest/{appid}` | Streams the complete manifest ZIP archive (`.manifest` + `{appid}.lua`). |
-| `GET` | `/api/v1/lua/{appid}` | Streams the raw Steam `{appid}.lua` configuration script. |
-| `GET` | `/api/v1/manifest/{appid}/{depot_id}` | Downloads a specific depot's binary `.manifest` file. |
-| `GET` | `/api/v1/info/{appid}` | Inspects depot count, manifest GIDs, and package size. |
-| `GET` | `/api/v1/auth/public-key` | Retrieves or rotates the active 7-Day Public Trial Key. |
-| `POST`| `/api/v1/auth/create-key` | Admin endpoint to mint custom API keys. |
-| `POST`| `/api/v1/auth/claim-discord-key`| Discord Bot endpoint to issue 1-month keys to server members. |
-| `GET` | `/api/v1/health` | Upstream health status, cache volume, and anti-scraping metrics. |
+| `GET` | `/api/v1/manifest/{appid}` | Downloads the complete manifest ZIP package (`.manifest` binaries + `{appid}.lua`). |
+| `GET` | `/api/v1/lua/{appid}` | Streams the raw Steam `{appid}.lua` configuration script as text. |
+| `GET` | `/api/v1/manifest/{appid}/{depot_id}` | Downloads an individual depot's binary `.manifest` file. |
+| `GET` | `/api/v1/info/{appid}` | Returns JSON metadata: depot list, manifest GIDs, and archive size. |
+| `GET` | `/api/v1/auth/public-key` | Retrieves the latest active 7-Day Public Trial Key. |
+| `GET` | `/api/v1/health` | Returns service status and health statistics. |
 
 ---
 
 ### Request & Response Examples
 
 <details>
-<summary><b>1. Download Manifest ZIP (`/api/v1/manifest/{appid}`)</b></summary>
+<summary><b>1. Download Manifest Package (`/api/v1/manifest/{appid}`)</b></summary>
 
 ```bash
 curl -H "X-API-Key: YOUR_API_KEY" \
-     "http://localhost:8000/api/v1/manifest/730" \
+     "http://YOUR_GATEWAY_URL/api/v1/manifest/730" \
      -o "730.zip"
 ```
-**Response:** Binary ZIP containing all depot manifests and `730.lua`.
+**Response:** Binary ZIP archive containing all depot manifests and `730.lua`.
 </details>
 
 <details>
@@ -210,7 +221,7 @@ curl -H "X-API-Key: YOUR_API_KEY" \
 
 ```bash
 curl -H "X-API-Key: YOUR_API_KEY" \
-     "http://localhost:8000/api/v1/lua/730"
+     "http://YOUR_GATEWAY_URL/api/v1/lua/730"
 ```
 **Response Preview:**
 ```lua
@@ -233,7 +244,7 @@ setManifestid(732, "8293740192837401928")
 
 ```bash
 curl -H "X-API-Key: YOUR_API_KEY" \
-     "http://localhost:8000/api/v1/info/730"
+     "http://YOUR_GATEWAY_URL/api/v1/info/730"
 ```
 **Response:**
 ```json
@@ -253,64 +264,18 @@ curl -H "X-API-Key: YOUR_API_KEY" \
 
 ---
 
-## 🤖 Discord Bot 1-Month Key Claim System
+## 💬 Official Community
 
-AetherVault includes a Discord Bot ([`discord_bot/claim_bot.py`](discord_bot/claim_bot.py)) that lets members of your Discord server claim a 1-Month Extended Key:
+Join the **Infinity Heaven** Discord server for updates, 1-month API keys, and community support:
 
-1. In your `.env`, set:
-   ```ini
-   DISCORD_TOKEN=your_discord_bot_token_here
-   API_PUBLIC_URL=http://your-server-ip:8000
-   ```
-2. Start the Discord Bot:
-   ```bash
-   python discord_bot/claim_bot.py
-   ```
-3. Members can now type `/claimkey` in your server to receive their private 1-Month Key (30 Days, 150 requests/day).
+[![Infinity Heaven Discord](https://img.shields.io/badge/Join-Infinity%20Heaven-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/rhWuMYnapB)
+
+**Discord Invite:** [https://discord.gg/rhWuMYnapB](https://discord.gg/rhWuMYnapB)
 
 ---
 
-## 🚀 Running Your Own Gateway Instance
+## 📜 License
 
-### 1. Clone & Install
-```bash
-git clone https://github.com/KINGODIN1124/Manifest.git
-cd Manifest
-pip install -r requirements.txt
-```
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
 
-### 2. Configure Environment (`.env`)
-```bash
-cp .env.example .env
-```
-Fill in your credentials:
-```ini
-UPSTREAM_SESSION_COOKIE=s%3Ayour_session_cookie_here
-UPSTREAM_EMAIL=your_login_email@example.com
-UPSTREAM_PASSWORD=your_password_here
-PORT=8000
-```
-*(With `UPSTREAM_EMAIL` and `UPSTREAM_PASSWORD` filled in, AetherVault will automatically log in and refresh your session cookie whenever it expires!)*
-
-### 3. Start the Server
-```bash
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
-
----
-
-## 🐳 Docker Deployment
-
-```bash
-docker-compose up -d --build
-```
-This automatically mounts `./cache_storage`, `./keys.json`, and `./banned_ips.json` to preserve all data across container updates.
-
----
-
-## 📜 License & Credits
-
-Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more information.
-
-- **Developer:** [@KINGODIN1124](https://github.com/KINGODIN1124)
-- **Discord Community:** [Join Crack World](https://discord.gg/crackworld)
+Maintained by [@KINGODIN1124](https://github.com/KINGODIN1124)
