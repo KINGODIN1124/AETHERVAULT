@@ -41,7 +41,7 @@ av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdH
 | Parameter | Policy |
 | :--- | :--- |
 | **Access Tier** | **7-Day Public Community Trial** |
-| **Daily Quota** | **30 requests / 24 hours** |
+| **Trial Quotas** | **10 requests / 24 hours** (Max **70 requests / week**) |
 | **Payload Content** | Complete `.zip` (with all depot `.manifest` binaries & compiled `{appid}.lua`) |
 | **Response Time** | Ultra-fast (&lt; 20ms for cached titles) |
 
@@ -58,7 +58,7 @@ curl -H "X-API-Key: av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IF
 
 ## 🚀 Want 1-Month Extended Access? Join Infinity Heaven!
 
-Need more than 30 requests per day for your project? Claim a **1-Month Extended Access Key** for **FREE** by joining the **Infinity Heaven** community:
+Need more than 10 requests per day for your project? Claim a **1-Month Extended Access Key** with **150 requests / day** for **FREE** by joining the **Infinity Heaven** community:
 
 <p align="center">
   <a href="https://discord.gg/rhWuMYnapB">
