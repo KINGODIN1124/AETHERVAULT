@@ -68,10 +68,11 @@ Need more than 10 requests per day for your project? Claim a **1-Month Extended 
 </p>
 
 ### Perks of 1-Month Infinity Heaven Key:
-- ⚡ **150 Requests per day** (5x higher limit)
+- ⚡ **150 Requests per day** (15x higher daily quota)
 - 📅 **Valid for 30 Full Days**
 - 🔑 **Dedicated Private API Key**
-- 💬 **Direct support & request assistance in the server**
+- 🚀 **How to claim:** Type `/claimkey` in the bot channel on **Infinity Heaven** to unlock your key in seconds!
+- 🌟 **Server Boosters:** Automatically bypass checkpoints with instant VIP access (200 req/day)!
 
 ---
 
