@@ -46,10 +46,12 @@ av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdH
 | **Response Time** | Ultra-fast (&lt; 20ms for cached titles) |
 
 ### Quick Test in cURL:
+
+> [!TIP]
+> Run this command in your **Windows Command Prompt (CMD)**, **PowerShell**, or **Linux Terminal** to immediately download the Counter-Strike 2 manifest package:
+
 ```bash
-curl -H "X-API-Key: av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdHkgVHJpYWwiLCJ0aWVyIjoicHVibGljX3RyaWFsIiwiaWF0IjoxNzkxOTc0NDkzLCJleHAiOjE3OTI1NzkyOTN9.33dbe57879d144d332a0e60abe94f89d" \
-     "http://YOUR_GATEWAY_URL/api/v1/manifest/730" \
-     -o "730.zip"
+curl -H "X-API-Key: av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdHkgVHJpYWwiLCJ0aWVyIjoicHVibGljX3RyaWFsIiwiaWF0IjoxNzkxOTc0NDkzLCJleHAiOjE3OTI1NzkyOTN9.33dbe57879d144d332a0e60abe94f89d" https://aethervault.zayrixcw.workers.dev/api/v1/manifest/730 -o 730.zip
 ```
 
 ---
@@ -117,8 +119,8 @@ graph LR
 ```python
 import requests
 
-API_KEY = "av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTki..."
-GATEWAY_URL = "http://YOUR_GATEWAY_URL"
+API_KEY = "av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdHkgVHJpYWwiLCJ0aWVyIjoicHVibGljX3RyaWFsIiwiaWF0IjoxNzkxOTc0NDkzLCJleHAiOjE3OTI1NzkyOTN9.33dbe57879d144d332a0e60abe94f89d"
+GATEWAY_URL = "https://aethervault.zayrixcw.workers.dev"
 APP_ID = 730  # Counter-Strike 2
 
 headers = {"X-API-Key": API_KEY}
@@ -137,7 +139,7 @@ if response.status_code == 200:
 import aiohttp
 import asyncio
 
-async def fetch_manifest(appid: int, api_key: str, gateway_url: str):
+async def fetch_manifest(appid: int, api_key: str, gateway_url: str = "https://aethervault.zayrixcw.workers.dev"):
     headers = {"X-API-Key": api_key}
     async with aiohttp.ClientSession() as session:
         async with session.get(f"{gateway_url}/api/v1/manifest/{appid}", headers=headers) as resp:
@@ -149,14 +151,14 @@ async def fetch_manifest(appid: int, api_key: str, gateway_url: str):
             else:
                 print(f"Error {resp.status}: {await resp.text()}")
 
-# asyncio.run(fetch_manifest(730, "YOUR_API_KEY", "http://YOUR_GATEWAY_URL"))
+# asyncio.run(fetch_manifest(730, "YOUR_API_KEY"))
 ```
 
 ### 3. JavaScript / Node.js (`fetch`)
 ```javascript
 const fs = require('fs');
 
-async function downloadManifest(appId, apiKey, gatewayUrl) {
+async function downloadManifest(appId, apiKey, gatewayUrl = "https://aethervault.zayrixcw.workers.dev") {
   const response = await fetch(`${gatewayUrl}/api/v1/manifest/${appId}`, {
     headers: { 'X-API-Key': apiKey }
   });
@@ -175,7 +177,7 @@ async function downloadManifest(appId, apiKey, gatewayUrl) {
 If you run a Discord manifest bot (such as `Manifest-Bot`), simply configure your `.env`:
 ```ini
 MANIFEST_API_KEY=av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTki...
-MANIFEST_API_URL=http://YOUR_GATEWAY_URL
+MANIFEST_API_URL=https://aethervault.zayrixcw.workers.dev
 ```
 
 ---
@@ -209,9 +211,7 @@ Authenticate your requests using any of the following formats:
 <summary><b>1. Download Manifest Package (`/api/v1/manifest/{appid}`)</b></summary>
 
 ```bash
-curl -H "X-API-Key: YOUR_API_KEY" \
-     "http://YOUR_GATEWAY_URL/api/v1/manifest/730" \
-     -o "730.zip"
+curl -H "X-API-Key: YOUR_API_KEY" https://aethervault.zayrixcw.workers.dev/api/v1/manifest/730 -o 730.zip
 ```
 **Response:** Binary ZIP archive containing all depot manifests and `730.lua`.
 </details>
@@ -220,8 +220,7 @@ curl -H "X-API-Key: YOUR_API_KEY" \
 <summary><b>2. Fetch Raw Lua Config (`/api/v1/lua/{appid}`)</b></summary>
 
 ```bash
-curl -H "X-API-Key: YOUR_API_KEY" \
-     "http://YOUR_GATEWAY_URL/api/v1/lua/730"
+curl -H "X-API-Key: YOUR_API_KEY" https://aethervault.zayrixcw.workers.dev/api/v1/lua/730
 ```
 **Response Preview:**
 ```lua
@@ -243,8 +242,7 @@ setManifestid(732, "8293740192837401928")
 <summary><b>3. Inspect Package Metadata (`/api/v1/info/{appid}`)</b></summary>
 
 ```bash
-curl -H "X-API-Key: YOUR_API_KEY" \
-     "http://YOUR_GATEWAY_URL/api/v1/info/730"
+curl -H "X-API-Key: YOUR_API_KEY" https://aethervault.zayrixcw.workers.dev/api/v1/info/730
 ```
 **Response:**
 ```json
