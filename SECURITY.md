@@ -15,3 +15,4 @@ If you discover any security vulnerability (especially regarding token generatio
 3. Include detailed steps to reproduce the issue.
 
 We appreciate your efforts in keeping this project secure.
+

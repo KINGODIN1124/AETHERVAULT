@@ -7,16 +7,23 @@ load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# DepotBox Authentication
-DEPOTBOX_COOKIE = os.getenv("DEPOTBOX_COOKIE", "").strip()
+# Upstream Backend Session & Authentication
+# Backwards-compatible with DEPOTBOX_COOKIE but uses clean UPSTREAM_SESSION_COOKIE
+SESSION_COOKIE = (
+    os.getenv("UPSTREAM_SESSION_COOKIE", "")
+    or os.getenv("DEPOTBOX_COOKIE", "")
+).strip()
+
+UPSTREAM_URL = os.getenv("UPSTREAM_URL", "https://depotbox.org").rstrip("/")
+UPSTREAM_EMAIL = os.getenv("UPSTREAM_EMAIL", "").strip()
+UPSTREAM_PASSWORD = os.getenv("UPSTREAM_PASSWORD", "").strip()
 
 # Derived or explicit Master Secret for cryptographic API key signing
 RAW_MASTER_SECRET = os.getenv("API_MASTER_SECRET", "").strip()
-if not RAW_MASTER_SECRET and DEPOTBOX_COOKIE:
-    # Deterministically derive master signing secret from SHA256 of session ID
-    API_MASTER_SECRET = hashlib.sha256(f"depotbox_salt_{DEPOTBOX_COOKIE}".encode()).hexdigest()
+if not RAW_MASTER_SECRET and SESSION_COOKIE:
+    API_MASTER_SECRET = hashlib.sha256(f"aethervault_salt_{SESSION_COOKIE}".encode()).hexdigest()
 else:
-    API_MASTER_SECRET = RAW_MASTER_SECRET or "default_depotbox_api_secret_change_me"
+    API_MASTER_SECRET = RAW_MASTER_SECRET or "aethervault_default_secret_key_change_me"
 
 # Pre-authorized static keys
 STATIC_KEYS_ENV = os.getenv("STATIC_API_KEYS", "")
@@ -26,13 +33,21 @@ STATIC_API_KEYS = set(k.strip() for k in STATIC_KEYS_ENV.split(",") if k.strip()
 HOST = os.getenv("HOST", "0.0.0.0")
 PORT = int(os.getenv("PORT", 8000))
 
-# Rate Limiting
-RATE_LIMIT_PER_MINUTE = int(os.getenv("RATE_LIMIT_PER_MINUTE", 60))
+# Rate Limiting & Anti-Scraping Defense
+ENABLE_ANTI_SCRAPING = os.getenv("ENABLE_ANTI_SCRAPING", "true").lower() in ("1", "true", "yes")
+PUBLIC_DAILY_LIMIT = int(os.getenv("PUBLIC_DAILY_LIMIT", 30))             # Max requests per day for public keys
+DISCORD_DAILY_LIMIT = int(os.getenv("DISCORD_DAILY_LIMIT", 150))          # Max requests per day for 1-month Discord keys
+BURST_LIMIT_PER_SECOND = int(os.getenv("BURST_LIMIT_PER_SECOND", 5))      # Ban if > 5 req/sec
+BAN_DURATION_HOURS = int(os.getenv("BAN_DURATION_HOURS", 24))             # Auto-ban duration
 
 # Cache
 ENABLE_CACHE = os.getenv("ENABLE_CACHE", "true").lower() in ("1", "true", "yes")
 CACHE_DIR = os.getenv("CACHE_DIR", os.path.join(BASE_DIR, "cache_storage"))
 os.makedirs(CACHE_DIR, exist_ok=True)
+
+# Session Storage
+SESSION_STORAGE_DIR = os.path.join(BASE_DIR, "session_storage")
+os.makedirs(SESSION_STORAGE_DIR, exist_ok=True)
 
 # Fallbacks
 ENABLE_FALLBACK_MIRRORS = os.getenv("ENABLE_FALLBACK_MIRRORS", "true").lower() in ("1", "true", "yes")

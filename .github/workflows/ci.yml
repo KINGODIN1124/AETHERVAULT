@@ -36,3 +36,4 @@ jobs:
       - name: Verify Key Engine & CLI Syntax
         run: |
           python -c "from app.core.key_engine import KeyEngine; engine = KeyEngine(master_secret='test_secret'); k = engine.create_api_key_from_session('CI-Test'); assert engine.verify_api_key(k['api_key'])[0] is True; print('Key Engine Verified Successfully!')"
+

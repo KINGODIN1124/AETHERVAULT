@@ -1,19 +1,20 @@
 <div align="center">
 
 ```
-  ____  _____ ____   ___ _____   __     ___   _   _ _ _____ 
- |  _ \| ____|  _ \ / _ \_   _|  \ \   / / \ | | | |_   _|
- | | | |  _| | |_) | | | || | ____\ \ / / _ \| | | | | |  
- | |_| | |___|  __/| |_| || ||_____\ V / ___ \ |_| | | |  
- |____/|_____|_|    \___/ |_|        \_/_/   \_\___/  |_|  
+     ___   ______ _____ _   _ _____ ______ _   _ ___   _   _ _ _____ 
+    / _ \ |  ____|_   _| | | |  ___|  __  | | | / _ \ | | | | |_   _|
+   / /_\ \| |__    | | | |_| | |__ | |__) | | |/ /_\ \| | | | | | |  
+   |  _  ||  __|   | | |  _  |  __||  _  /| | |  _  || | | | | | |  
+   | | | || |____  | | | | | | |___| | \ \| |_| | | || |_| | | | |  
+   \_| |_/|______| |_| \_| |_/_____|_|  \_\\___/\_| |_/\___/  |_|  
 ```
 
-# ⚡ DEPOTVAULT
+# ⚡ AETHERVAULT
 ### *The Next-Generation Steam Depot Manifest & Lua Distribution Gateway*
 
 <p align="center">
-  <b>Transform your DepotBox Premium session into an enterprise-grade, high-speed REST API.</b><br>
-  <i>Mint cryptographically secure API keys, bypass Cloudflare Turnstile, stream manifests instantly, and shield your account credentials from the public.</i>
+  <b>High-speed, enterprise-grade REST API providing instant access to Steam game depot manifests and Lua scripts.</b><br>
+  <i>Built for developers, bot creators, and game management toolsets with cryptographic key authentication, in-memory caching, anti-scraping IP defense, and automated session rejuvenation.</i>
 </p>
 
 <p align="center">
@@ -25,43 +26,81 @@
   <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-OpenAPI%203.0-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger"></a>
 </p>
 
-[✨ Features](#-features) • [🏛️ Architecture](#-system-architecture) • [🚀 Quickstart](#-quickstart-guide) • [🔑 API Keys](#-generating-api-keys) • [📡 REST Endpoints](#-rest-api-documentation) • [🐳 Docker](#-docker-deployment) • [🤖 Bot Integration](#-discord-bot-integration)
+[✨ Try the Public Key](#-public-community-api-key-7-day-trial) • [🎁 1-Month Discord Key](#-want-1-month-extended-access-join-our-discord) • [🏛️ Architecture](#-system-architecture) • [🛡️ Anti-Scraping](#-anti-scraping-shield--ip-defense) • [📡 API Reference](#-rest-api-documentation) • [🤖 Discord Bot](#-discord-bot-1-month-key-claim-system)
 
 ---
 
 </div>
 
-## 🌟 Features
+## 🎁 Public Community API Key (7-Day Trial)
+
+To test AetherVault immediately in your own tool, Discord bot, or script, use our active **Public Community Trial Key**:
+
+```http
+API Key: av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdHkgVHJpYWwiLCJ0aWVyIjoicHVibGljX3RyaWFsIiwiaWF0IjoxNzkxOTc0NDkzLCJleHAiOjE3OTI1NzkyOTN9.33dbe57879d144d332a0e60abe94f89d
+```
+
+| Parameter | Policy |
+| :--- | :--- |
+| **Validity** | **7 Days** (Public Community Trial) |
+| **Daily Quota** | **30 requests / 24 hours** per IP |
+| **Burst Threshold** | Maximum 5 requests / second (Strict anti-scraping enforced) |
+| **Payload Format** | Complete `.zip` (with `.manifest` binaries & compiled `{appid}.lua`) |
+
+### Quick Test in cURL:
+```bash
+curl -H "X-API-Key: av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IFB1YmxpYyBDb21tdW5pdHkgVHJpYWwiLCJ0aWVyIjoicHVibGljX3RyaWFsIiwiaWF0IjoxNzkxOTc0NDkzLCJleHAiOjE3OTI1NzkyOTN9.33dbe57879d144d332a0e60abe94f89d" \
+     "http://localhost:8000/api/v1/manifest/730" \
+     -o "730.zip"
+```
+
+---
+
+## 🚀 Want 1-Month Extended Access? Join Our Discord!
+
+Need more than 30 requests per day? You can claim a **1-Month Extended Access Key** for **FREE** by joining our Discord community:
+
+[![Join Discord](https://img.shields.io/badge/Discord-Join%20Our%20Server-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/crackworld)
+
+### Perks of 1-Month Discord Member Key:
+- ⚡ **150 Requests per day** (5x higher limit)
+- 📅 **Valid for 30 Full Days**
+- 🛡️ **Priority Queue & Instant Redundancy**
+- 🤖 **How to claim:** Simply type `/claimkey` in the bot channel on our Discord server!
+
+---
+
+## 🌟 Core Features
 
 <table>
   <tr>
     <td width="50%">
-      <h3>🔒 Zero Credential Exposure</h3>
-      <p>Host safely on <b>Public GitHub</b> without fear. Your raw <code>connect.sid</code> session cookie remains strictly encrypted on your host machine while external consumers authenticate through tokenized API keys.</p>
+      <h3>🔒 Cryptographic Token Minting</h3>
+      <p>API keys are mathematically signed using HMAC-SHA256, allowing stateless validation while recording usage in a tamper-resistant local registry.</p>
     </td>
     <td width="50%">
-      <h3>🔑 Cryptographic Key Minting</h3>
-      <p>Mints tamper-proof API keys derived from HMAC-SHA256 mathematical signatures of your DepotBox session secret. Includes an audited local registry with instant revocation.</p>
+      <h3>🛡️ Anti-Scraping & Auto-IP Ban</h3>
+      <p>Automated shield monitoring burst requests. Rapid sequential crawlers (> 5 req/s) or malicious scanners are instantly blacklisted and banned for 24 hours.</p>
     </td>
   </tr>
   <tr>
+    <td width="50%">
+      <h3>🔄 Automated Session Rejuvenation</h3>
+      <p>Never worry about session expiration. Built-in headless Playwright engine automatically detects expired cookies, signs back in, and updates secrets without downtime.</p>
+    </td>
     <td width="50%">
       <h3>⚡ In-Memory & Disk Cache</h3>
-      <p>Blazing-fast response times (&lt;15ms for cached items). Compiled ZIP archives and Lua configurations are stored locally, dramatically saving bandwidth and DepotBox rate limits.</p>
-    </td>
-    <td width="50%">
-      <h3>🛡️ Automatic Multi-Tier Fallback</h3>
-      <p>If DepotBox is temporarily inaccessible or missing a game, DepotVault seamlessly falls back to SteamCMD PICS and public GitHub mirrors, compiling fresh packages dynamically.</p>
+      <p>Lightning-fast delivery (&lt;15ms for cached packages). Preserves server bandwidth and keeps response latency near-instantaneous.</p>
     </td>
   </tr>
   <tr>
     <td width="50%">
-      <h3>🔌 Universal Client Compatibility</h3>
-      <p>Direct drop-in replacement for VesperDownloader API, Steam Manifest Manager, SteaMidra, Luie tools, and Discord bots like <code>Manifest-Bot</code>.</p>
+      <h3>🌐 Multi-Source Redundancy</h3>
+      <p>If the upstream engine is missing an AppID, AetherVault automatically queries SteamCMD PICS and public GitHub mirrors, compiling fresh packages dynamically.</p>
     </td>
     <td width="50%">
-      <h3>🐳 Cloud & Container Native</h3>
-      <p>Production-ready Docker and Docker Compose orchestration. Deploy effortlessly to Railway, Render, Fly.io, or any Linux VPS.</p>
+      <h3>🤖 Built-in Discord Bot Key System</h3>
+      <p>Includes a ready-to-run Discord Bot with the <code>/claimkey</code> command so your community members can generate their own 1-month keys automatically.</p>
     </td>
   </tr>
 </table>
@@ -72,25 +111,31 @@
 
 ```mermaid
 graph TD
-    Client["📱 Client / Discord Bot / Tool"] -->|"Request with X-API-Key"| Gateway["⚡ DepotVault API Gateway (FastAPI)"]
+    Client["📱 Client / Discord Bot / Tool"] -->|"Request with X-API-Key"| Gateway["⚡ AetherVault API Gateway (FastAPI)"]
     
     subgraph Security Layer
-        Gateway --> Auth["🔑 KeyEngine Middleware"]
+        Gateway --> Shield["🛡️ Anti-Scraping & IP Shield"]
+        Shield -->|"Check IP Blacklist & Burst"| Banned{"Banned / Scraping?"}
+        Banned -->|"Yes"| Block["🚫 403 Forbidden (Auto-Banned 24h)"]
+        Banned -->|"No"| Auth["🔑 KeyEngine Token Verifier"]
         Auth -->|"HMAC-SHA256 Verification"| Valid{"Valid Key?"}
-        Valid -->|"No"| Reject["❌ 401 / 403 Forbidden"]
+        Valid -->|"No"| Reject["❌ 401 Unauthorized"]
+        Valid -->|"Yes"| Quota{"Daily Quota OK?"}
+        Quota -->|"Exceeded"| LimitErr["⚠️ 429 Too Many Requests"]
     end
 
     subgraph Storage & Cache
-        Valid -->|"Yes"| CacheCheck{"In Cache?"}
+        Quota -->|"Passed"| CacheCheck{"In Cache?"}
         CacheCheck -->|"Hit - Under 15ms"| ReturnCache["📦 Stream Cached ZIP/Lua"]
     end
 
-    subgraph Upstream Provider Pipeline
-        CacheCheck -->|"Cache Miss"| DepotBox["🌐 DepotBox.org Engine"]
-        DepotBox -->|"connect.sid - Premium Bypass"| Turnstile["🛡️ Cloudflare Turnstile Bypass"]
-        Turnstile -->|"Job Polling & Download"| Success{"Downloaded?"}
+    subgraph Upstream Pipeline
+        CacheCheck -->|"Cache Miss"| UpstreamEngine["🌐 Upstream Manifest Engine"]
+        UpstreamEngine -->|"Job Polling & Download"| Success{"Downloaded?"}
         Success -->|"Yes"| SaveCache["💾 Save to Disk & Memory Cache"]
         SaveCache --> ReturnCache
+        Success -->|"Session Expired"| Rejuvenate["🔄 Automated Headless Login & Refresh"]
+        Rejuvenate --> UpstreamEngine
         Success -->|"Failed / Missing"| Fallback["🔄 SteamCMD PICS & GitHub Mirrors"]
         Fallback --> DynamicCompile["⚙️ Dynamic Manifest & Lua Synthesis"]
         DynamicCompile --> SaveCache
@@ -101,101 +146,34 @@ graph TD
 
 ---
 
-## 🚀 Quickstart Guide
+## 🛡️ Anti-Scraping Shield & IP Defense
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/KINGODIN1124/Manifest.git
-cd Manifest
-```
+To prevent aggressive scraping and protect server resources, AetherVault includes a strict real-time defense layer:
 
-### 2. Install Python Dependencies
-```bash
-pip install -r requirements.txt
-```
+1. **Burst Scraping Detection:** Any client IP sending more than 5 requests per second is flagged as an automated scraper.
+2. **24-Hour IP Blacklist:** The offending IP is immediately banned for 24 hours (`HTTP 403 Forbidden`).
+3. **Malicious Tool Filtering:** Automatic blocking of automated scanner signatures (e.g. `sqlmap`, `scrapy`, `nikto`).
+4. **Administrative Controls:** Manage blacklist via CLI:
+   ```bash
+   # View blacklisted IPs
+   python cli.py list-banned
 
-### 3. Extract Your DepotBox Session
-1. Log into your account on [https://depotbox.org/](https://depotbox.org/) (ensure you are a **Premium Member**).
-2. Open Browser DevTools (`F12`) -> **Application** -> **Cookies** -> `https://depotbox.org`.
-3. Copy the value of the `connect.sid` cookie.
+   # Unban an IP address
+   python cli.py unban 192.168.1.50
 
-### 4. Configure Environment
-Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-Populate `.env`:
-```ini
-DEPOTBOX_COOKIE=s%3Ayour_actual_connect_sid_here
-PORT=8000
-RATE_LIMIT_PER_MINUTE=60
-ENABLE_CACHE=true
-ENABLE_FALLBACK_MIRRORS=true
-```
-
----
-
-## 🔑 Generating API Keys
-
-DepotVault includes an administrative CLI to generate, audit, and revoke API keys:
-
-```bash
-# Mint a new API key tied to your session ID
-python cli.py create-key --label "Production Bot" --tier premium --days 365
-```
-
-```text
-====================================================================
-      ⚡ DEPOTBOX MANIFEST & LUA API CLI MANAGER ⚡
-====================================================================
-[*] Creating API key from DepotBox Session ID...
-
-[+] API Key Generated Successfully!
---------------------------------------------------------------------
-🔑 API Key:    dbx_eyJraWQiOiIyYmZhY2FkNWFkNzAi...3d904425bcff
-🏷️  Label:      Production Bot
-⭐ Tier:       premium
-🆔 Key ID:     2bfacad5ad70
-📅 Expires In: 365 days
---------------------------------------------------------------------
-```
-
-### Additional CLI Commands
-```bash
-# Verify connection to DepotBox upstream
-python cli.py check-session
-
-# List all issued keys and their current status
-python cli.py list-keys
-
-# Revoke a compromised key immediately
-python cli.py revoke-key <KEY_ID>
-
-# Test-download an AppID directly to disk
-python cli.py fetch 730 --out ./downloads
-```
-
----
-
-## 🌐 Running the API Server
-
-```bash
-python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
-
-Once started:
-- 📖 **Interactive Swagger UI:** [http://localhost:8000/docs](http://localhost:8000/docs)
-- 📚 **Alternative ReDoc UI:** [http://localhost:8000/redoc](http://localhost:8000/redoc)
+   # Manually ban an abusive IP
+   python cli.py ban 192.168.1.50 --reason "Abusive scraping"
+   ```
 
 ---
 
 ## 📡 REST API Documentation
 
 ### Authentication Methods
-Every protected endpoint accepts your API Key through any of the following:
-* **Header:** `X-API-Key: dbx_...`
-* **Bearer Token:** `Authorization: Bearer dbx_...`
-* **Query Parameter:** `?key=dbx_...`
+Supply your API key via any of the following:
+* **Header:** `X-API-Key: av_...`
+* **Bearer Token:** `Authorization: Bearer av_...`
+* **Query Parameter:** `?key=av_...`
 
 ---
 
@@ -204,13 +182,13 @@ Every protected endpoint accepts your API Key through any of the following:
 | Method | Endpoint | Description |
 | :---: | :--- | :--- |
 | `GET` | `/api/v1/manifest/{appid}` | Streams the complete manifest ZIP archive (`.manifest` + `{appid}.lua`). |
-| `GET` | `/api/v1/lua/{appid}` | Extracts and streams the raw Steam `{appid}.lua` configuration script. |
+| `GET` | `/api/v1/lua/{appid}` | Streams the raw Steam `{appid}.lua` configuration script. |
 | `GET` | `/api/v1/manifest/{appid}/{depot_id}` | Downloads a specific depot's binary `.manifest` file. |
-| `GET` | `/api/v1/info/{appid}` | Inspects depot count, manifest GIDs, and total package size. |
-| `POST`| `/api/v1/auth/create-key` | Programmatically creates a new API key derived from a session. |
-| `GET` | `/api/v1/auth/verify` | Validates API key authenticity and returns key metadata. |
-| `GET` | `/api/v1/health` | Upstream health status, cache volume, and session diagnostic. |
-| `GET` | `/api/v1/partner/lua` | Drop-in compatibility endpoint for Vesper/Luie tools. |
+| `GET` | `/api/v1/info/{appid}` | Inspects depot count, manifest GIDs, and package size. |
+| `GET` | `/api/v1/auth/public-key` | Retrieves or rotates the active 7-Day Public Trial Key. |
+| `POST`| `/api/v1/auth/create-key` | Admin endpoint to mint custom API keys. |
+| `POST`| `/api/v1/auth/claim-discord-key`| Discord Bot endpoint to issue 1-month keys to server members. |
+| `GET` | `/api/v1/health` | Upstream health status, cache volume, and anti-scraping metrics. |
 
 ---
 
@@ -224,7 +202,7 @@ curl -H "X-API-Key: YOUR_API_KEY" \
      "http://localhost:8000/api/v1/manifest/730" \
      -o "730.zip"
 ```
-**Response:** Complete binary ZIP package containing all depot manifests and `730.lua`.
+**Response:** Binary ZIP containing all depot manifests and `730.lua`.
 </details>
 
 <details>
@@ -238,7 +216,7 @@ curl -H "X-API-Key: YOUR_API_KEY" \
 ```lua
 -- ============================================================
 -- AUTOMATED STEAM CONFIG FOR Counter-Strike 2
--- Generated via DepotVault Gateway
+-- Generated via AetherVault Gateway
 -- AppID:   730
 -- ============================================================
 
@@ -275,51 +253,58 @@ curl -H "X-API-Key: YOUR_API_KEY" \
 
 ---
 
-## 🤖 Discord Bot Integration
+## 🤖 Discord Bot 1-Month Key Claim System
 
-To connect your Discord bot (such as [`Manifest-Bot`](https://github.com/KINGODIN1124/Manifest-Bot)) to DepotVault:
+AetherVault includes a Discord Bot ([`discord_bot/claim_bot.py`](discord_bot/claim_bot.py)) that lets members of your Discord server claim a 1-Month Extended Key:
 
-1. Update your bot's `.env`:
-```ini
-MANIFEST_API_KEY=YOUR_GENERATED_DBX_API_KEY
-MANIFEST_API_URL=http://your-server-ip:8000
+1. In your `.env`, set:
+   ```ini
+   DISCORD_TOKEN=your_discord_bot_token_here
+   API_PUBLIC_URL=http://your-server-ip:8000
+   ```
+2. Start the Discord Bot:
+   ```bash
+   python discord_bot/claim_bot.py
+   ```
+3. Members can now type `/claimkey` in your server to receive their private 1-Month Key (30 Days, 150 requests/day).
+
+---
+
+## 🚀 Running Your Own Gateway Instance
+
+### 1. Clone & Install
+```bash
+git clone https://github.com/KINGODIN1124/Manifest.git
+cd Manifest
+pip install -r requirements.txt
 ```
 
-2. Call DepotVault in your bot's download logic:
-```python
-import aiohttp
+### 2. Configure Environment (`.env`)
+```bash
+cp .env.example .env
+```
+Fill in your credentials:
+```ini
+UPSTREAM_SESSION_COOKIE=s%3Ayour_session_cookie_here
+UPSTREAM_EMAIL=your_login_email@example.com
+UPSTREAM_PASSWORD=your_password_here
+PORT=8000
+```
+*(With `UPSTREAM_EMAIL` and `UPSTREAM_PASSWORD` filled in, AetherVault will automatically log in and refresh your session cookie whenever it expires!)*
 
-async def download_game_manifest(appid: int, api_key: str, gateway_url: str):
-    headers = {"X-API-Key": api_key}
-    endpoint = f"{gateway_url}/api/v1/manifest/{appid}"
-    
-    async with aiohttp.ClientSession() as session:
-        async with session.get(endpoint, headers=headers) as resp:
-            if resp.status == 200:
-                return await resp.read()
-            raise Exception(f"Gateway Error (HTTP {resp.status}): {await resp.text()}")
+### 3. Start the Server
+```bash
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 ---
 
 ## 🐳 Docker Deployment
 
-Deploy with Docker Compose in a single command:
-
 ```bash
 docker-compose up -d --build
 ```
-
-The stack automatically mounts `./cache_storage` and `./keys.json` to the container host, guaranteeing that cached files and issued API keys persist across container restarts and updates.
-
----
-
-## 🛡️ Security Best Practices
-
-> [!IMPORTANT]
-> - **Public Repository Isolation**: `.gitignore` is rigorously configured to ignore `.env`, `keys.json`, `depotbox_session/`, and downloaded binaries. Never force-add these files.
-> - **Secret Management**: Configure `DEPOTBOX_COOKIE` strictly on your private host or through deployment environment variables (e.g. Render/Railway Secrets).
-> - **Instant Key Revocation**: If an API key is ever leaked or abused, revoke it immediately via `python cli.py revoke-key <KEY_ID>` without changing your DepotBox account password or session cookie.
+This automatically mounts `./cache_storage`, `./keys.json`, and `./banned_ips.json` to preserve all data across container updates.
 
 ---
 
@@ -328,4 +313,4 @@ The stack automatically mounts `./cache_storage` and `./keys.json` to the contai
 Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more information.
 
 - **Developer:** [@KINGODIN1124](https://github.com/KINGODIN1124)
-- **Engine Provider:** [DepotBox](https://depotbox.org)
+- **Discord Community:** [Join Crack World](https://discord.gg/crackworld)

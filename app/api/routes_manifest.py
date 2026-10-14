@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, Query, Path, HTTPException, status, Resp
 from fastapi.responses import PlainTextResponse
 
 from app.api.middleware import get_current_api_user
-from app.core.depotbox_client import depotbox_client
+from app.core.upstream_client import upstream_client
 from app.core.cache_manager import cache_manager
 from app.core.fallback_engine import fallback_engine
 from app.config import ENABLE_FALLBACK_MIRRORS
@@ -13,20 +13,20 @@ from app.config import ENABLE_FALLBACK_MIRRORS
 router = APIRouter(prefix="/api/v1", tags=["Manifest & Lua"])
 
 async def get_or_download_zip(appid: int, game_name: str = "", force_refresh: bool = False) -> bytes:
-    """Helper to retrieve ZIP from cache, DepotBox, or fallback mirrors."""
+    """Helper to retrieve ZIP from cache, upstream engine, or fallback mirrors."""
     if not force_refresh and cache_manager.has_manifest(appid):
         cached = cache_manager.get_zip_bytes(appid)
         if cached:
             return cached
 
-    # 1. Try DepotBox
+    # 1. Try Upstream Manifest Engine
     try:
-        zip_bytes = await depotbox_client.fetch_manifest_zip(appid, game_name)
+        zip_bytes = await upstream_client.fetch_manifest_zip(appid, game_name)
         if zip_bytes and len(zip_bytes) >= 512:
             cache_manager.save_zip(appid, zip_bytes)
             return zip_bytes
     except Exception as e:
-        print(f"[ManifestRoute] DepotBox download error for AppID {appid}: {e}")
+        print(f"[ManifestRoute] Upstream download error for AppID {appid}: {e}")
 
     # 2. Try Fallback Mirrors if enabled
     if ENABLE_FALLBACK_MIRRORS:
@@ -48,7 +48,7 @@ async def get_or_download_zip(appid: int, game_name: str = "", force_refresh: bo
 async def get_manifest_zip(
     appid: int = Path(..., description="Steam Application ID (e.g. 730, 1817190)"),
     name: Optional[str] = Query("", description="Optional game title"),
-    force: bool = Query(False, description="Force fresh fetch from DepotBox bypassing cache"),
+    force: bool = Query(False, description="Force fresh fetch bypassing cache"),
     user: Dict[str, Any] = Depends(get_current_api_user)
 ):
     """
@@ -63,7 +63,7 @@ async def get_manifest_zip(
             "Content-Disposition": f"attachment; filename={appid}.zip",
             "Content-Length": str(len(zip_bytes)),
             "X-AppID": str(appid),
-            "X-Source": "DepotBox-API-Gateway"
+            "X-Source": "AetherVault-API-Gateway"
         }
     )
 

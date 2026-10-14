@@ -4,10 +4,13 @@
 .env.*.local
 *.env
 
-# DepotBox & Authentication Cache
+# Authentication, Keys & Session Storage
 depotbox_session/
+session_storage/
 keys.json
 keys_backup.json
+banned_ips.json
+discord_claims.json
 
 # Cache and downloaded manifest binaries
 cache_storage/

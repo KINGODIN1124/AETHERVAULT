@@ -17,3 +17,4 @@ body:
       description: Why is this feature needed and who would benefit from it?
     validations:
       required: true
+

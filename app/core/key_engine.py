@@ -8,7 +8,6 @@ import uuid
 from typing import Optional, Dict, Any, Tuple
 from app.config import (
     API_MASTER_SECRET,
-    DEPOTBOX_COOKIE,
     STATIC_API_KEYS,
     BASE_DIR
 )
@@ -17,9 +16,11 @@ KEYS_REGISTRY_FILE = os.path.join(BASE_DIR, "keys.json")
 
 class KeyEngine:
     """
-    Manages API keys created from and verified against the DepotBox session ID.
-    Supports both stateless cryptographically signed tokens (HMAC-SHA256)
-    and a local audited JSON key registry.
+    Manages API keys created from and verified against the master session secret.
+    Supports:
+      - 7-Day Public Trial Keys (Max 30 requests/day)
+      - 1-Month Discord Member Keys (Max 150 requests/day)
+      - Admin & Permanent Client Keys
     """
 
     def __init__(self, master_secret: str = API_MASTER_SECRET):
@@ -47,18 +48,21 @@ class KeyEngine:
     def create_api_key_from_session(
         self,
         label: str = "Default Client",
-        tier: str = "premium",
-        expires_days: Optional[int] = 365,
-        prefix: str = "dbx_"
+        tier: str = "standard",
+        expires_days: Optional[int] = 30,
+        prefix: str = "av_"
     ) -> Dict[str, Any]:
         """
-        Creates a new cryptographically signed API key tied to the DepotBox session ID.
+        Creates a new cryptographically signed API key.
+        Tiers:
+          - 'public_trial': 7-day access, 30 req/day
+          - 'discord_member': 30-day access, 150 req/day
+          - 'premium' / 'admin': Unlimited or high threshold
         """
         key_id = uuid.uuid4().hex[:12]
         created_at = int(time.time())
         exp = (created_at + (expires_days * 86400)) if expires_days else None
 
-        # Build payload
         payload = {
             "kid": key_id,
             "label": label,
@@ -69,13 +73,9 @@ class KeyEngine:
         payload_bytes = json.dumps(payload, separators=(',', ':')).encode("utf-8")
         payload_b64 = base64.urlsafe_b64encode(payload_bytes).decode("utf-8").rstrip("=")
 
-        # Compute HMAC signature using master secret (derived from DepotBox session)
         sig = hmac.new(self.master_secret, payload_b64.encode("utf-8"), hashlib.sha256).hexdigest()
-
-        # Final key format
         api_key = f"{prefix}{payload_b64}.{sig[:32]}"
 
-        # Record in registry for management and tracking
         key_record = {
             "key_id": key_id,
             "api_key": api_key,
@@ -83,37 +83,53 @@ class KeyEngine:
             "tier": tier,
             "created_at": created_at,
             "expires_at": exp,
-            "active": True,
-            "request_count": 0
+            "active": True
         }
         self.registry[key_id] = key_record
         self._save_registry()
-
         return key_record
 
+    def get_or_create_public_7day_key(self) -> Dict[str, Any]:
+        """Returns the active 7-Day Public Trial Key (rotates if expired)."""
+        now = time.time()
+        for kid, r in self.registry.items():
+            if r.get("tier") == "public_trial" and r.get("active", True):
+                if r.get("expires_at", 0) > now:
+                    return r
+
+        # Create fresh 7-day public trial key
+        return self.create_api_key_from_session(
+            label="7-Day Public Community Trial",
+            tier="public_trial",
+            expires_days=7,
+            prefix="av_public_"
+        )
+
+    def create_discord_member_key(self, user_id: int, username: str) -> Dict[str, Any]:
+        """Generates a 1-Month (30 Days) Extended Access Key for Discord members."""
+        return self.create_api_key_from_session(
+            label=f"Discord Member: {username} ({user_id})",
+            tier="discord_member",
+            expires_days=30,
+            prefix="av_discord_"
+        )
+
     def verify_api_key(self, api_key: str) -> Tuple[bool, Optional[Dict[str, Any]]]:
-        """
-        Validates an API key.
-        Checks:
-          1. Static pre-configured keys in .env
-          2. Cryptographic signature derived from DepotBox session ID
-          3. Local registry for revocation and expiration
-        """
         if not api_key or not isinstance(api_key, str):
             return False, None
 
         api_key = api_key.strip()
 
-        # 1. Check static whitelist
+        # Check static whitelist
         if api_key in STATIC_API_KEYS:
             return True, {
                 "key_id": "static",
-                "label": "Static Environment Key",
-                "tier": "premium",
+                "label": "Static Preconfigured Key",
+                "tier": "admin",
                 "active": True
             }
 
-        # 2. Check registry by exact key match
+        # Check registry by exact key match
         for kid, record in self.registry.items():
             if record.get("api_key") == api_key:
                 if not record.get("active", True):
@@ -123,37 +139,32 @@ class KeyEngine:
                     return False, None  # Expired
                 return True, record
 
-        # 3. Check stateless cryptographic token
-        # Format: prefix<payload_b64>.<sig>
+        # Check stateless cryptographic signature
         if "." in api_key:
             parts = api_key.split(".", 1)
             raw_payload = parts[0]
             received_sig = parts[1]
 
-            # Strip known prefixes like dbx_ or smm_
             payload_b64 = raw_payload
-            for pfx in ["dbx_", "smm_"]:
+            for pfx in ["av_public_", "av_discord_", "av_", "dbx_", "smm_"]:
                 if payload_b64.startswith(pfx):
                     payload_b64 = payload_b64[len(pfx):]
                     break
 
             try:
-                # Add padding back if necessary
                 padding = len(payload_b64) % 4
                 if padding:
                     payload_b64 += "=" * (4 - padding)
                 payload_json = base64.urlsafe_b64decode(payload_b64).decode("utf-8")
                 payload = json.loads(payload_json)
 
-                # Recompute signature
-                raw_token_data = parts[0]
-                if raw_token_data.startswith("dbx_") or raw_token_data.startswith("smm_"):
-                    # Signature was computed over payload_b64
-                    pass
-                expected_sig = hmac.new(self.master_secret, payload_b64.rstrip("=").encode("utf-8"), hashlib.sha256).hexdigest()[:32]
+                expected_sig = hmac.new(
+                    self.master_secret,
+                    payload_b64.rstrip("=").encode("utf-8"),
+                    hashlib.sha256
+                ).hexdigest()[:32]
 
                 if hmac.compare_digest(received_sig, expected_sig):
-                    # Check expiry
                     exp = payload.get("exp")
                     if exp and time.time() > exp:
                         return False, None
@@ -164,7 +175,6 @@ class KeyEngine:
         return False, None
 
     def revoke_key(self, key_id: str) -> bool:
-        """Revokes an API key by ID."""
         if key_id in self.registry:
             self.registry[key_id]["active"] = False
             self._save_registry()
@@ -172,8 +182,6 @@ class KeyEngine:
         return False
 
     def list_keys(self) -> Dict[str, Any]:
-        """Returns all keys in registry."""
         return self.registry
 
-# Global instance
 key_engine = KeyEngine()

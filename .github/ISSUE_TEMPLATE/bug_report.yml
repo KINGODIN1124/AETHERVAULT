@@ -29,3 +29,4 @@ body:
       label: Relevant Log Output
       description: Please copy and paste any relevant logs from the API server or CLI.
       render: shell
+

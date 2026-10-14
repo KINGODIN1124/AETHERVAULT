@@ -3,29 +3,20 @@ from typing import Optional, Dict, Any
 from fastapi import Request, HTTPException, Security, status
 from fastapi.security import APIKeyHeader, HTTPBearer, HTTPAuthorizationCredentials
 from app.core.key_engine import key_engine
-from app.config import RATE_LIMIT_PER_MINUTE
+from app.core.anti_scrape import anti_scrape
 
 header_api_key = APIKeyHeader(name="X-API-Key", auto_error=False)
 bearer_auth = HTTPBearer(auto_error=False)
 
-# In-memory sliding rate limiter: {key_or_ip: [timestamps]}
-RATE_LIMIT_BUCKETS: Dict[str, list] = {}
-
-def check_rate_limit(client_id: str, max_requests: int = RATE_LIMIT_PER_MINUTE, window_seconds: int = 60):
-    now = time.time()
-    if client_id not in RATE_LIMIT_BUCKETS:
-        RATE_LIMIT_BUCKETS[client_id] = []
-
-    # Clean old requests
-    RATE_LIMIT_BUCKETS[client_id] = [t for t in RATE_LIMIT_BUCKETS[client_id] if now - t < window_seconds]
-
-    if len(RATE_LIMIT_BUCKETS[client_id]) >= max_requests:
-        raise HTTPException(
-            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
-            detail=f"Rate limit exceeded ({max_requests} requests per minute). Please try again shortly."
-        )
-
-    RATE_LIMIT_BUCKETS[client_id].append(now)
+def get_client_ip(request: Request) -> str:
+    """Extracts client IP, respecting X-Forwarded-For when behind proxy/Cloudflare."""
+    forwarded = request.headers.get("X-Forwarded-For")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    real_ip = request.headers.get("X-Real-IP")
+    if real_ip:
+        return real_ip.strip()
+    return request.client.host if request.client else "127.0.0.1"
 
 async def get_current_api_user(
     request: Request,
@@ -33,8 +24,20 @@ async def get_current_api_user(
     bearer_creds: Optional[HTTPAuthorizationCredentials] = Security(bearer_auth)
 ) -> Dict[str, Any]:
     """
-    Extracts and authenticates the API key from Header, Bearer token, or Query param.
+    Extracts, authenticates, and validates API keys.
+    Enforces anti-scraping burst protection, IP blacklisting, and 24-hour daily quotas.
     """
+    client_ip = get_client_ip(request)
+    user_agent = request.headers.get("User-Agent", "")
+
+    # Pre-check IP Ban
+    banned, ban_reason = anti_scrape.is_ip_banned(client_ip)
+    if banned:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ban_reason
+        )
+
     api_key = None
 
     # 1. Check X-API-Key header
@@ -54,7 +57,10 @@ async def get_current_api_user(
     if not api_key:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="API Key required. Provide via 'X-API-Key' header, 'Authorization: Bearer <key>', or '?key=<key>' query param."
+            detail=(
+                "API Key required. Use the 7-Day Public Trial Key from our GitHub README, "
+                "or pass your key via 'X-API-Key' header or '?key=<key>' parameter."
+            )
         )
 
     is_valid, key_record = key_engine.verify_api_key(api_key)
@@ -64,8 +70,12 @@ async def get_current_api_user(
             detail="Invalid, expired, or revoked API key."
         )
 
-    # Rate limiting by key
-    client_ident = key_record.get("key_id", api_key[:10])
-    check_rate_limit(client_ident)
+    # Enforce Anti-Scraping Shield & Daily Quota Limits
+    allowed, error_msg = anti_scrape.check_request(client_ip, user_agent, key_record)
+    if not allowed:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS if "Daily limit" in error_msg else status.HTTP_403_FORBIDDEN,
+            detail=error_msg
+        )
 
     return key_record

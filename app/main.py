@@ -9,19 +9,18 @@ from app.api.routes_auth import router as auth_router
 from app.config import PORT, HOST
 
 app = FastAPI(
-    title="DepotBox Manifest & Lua API Gateway",
+    title="AetherVault - Steam Manifest & Lua Distribution Gateway",
     description=(
-        "High-performance REST API gateway that serves Steam depot manifests and "
-        "Lua configurations powered by a DepotBox Premium Session. "
-        "Allows generating secure API keys from your DepotBox session so you can safely "
-        "host a public service without exposing your session cookies."
+        "Enterprise-grade REST API gateway for Steam depot manifests (.manifest) "
+        "and Lua configuration scripts (.lua). Features cryptographic API key generation, "
+        "in-memory caching, anti-scraping IP defense, and multi-source fallbacks."
     ),
-    version="1.0.0",
+    version="2.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
 )
 
-# Enable CORS for web applications / dashboard frontends
+# Enable CORS for web apps & dashboard integrations
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -37,19 +36,20 @@ app.include_router(auth_router)
 @app.get("/", tags=["Root"])
 async def root_index():
     return {
-        "service": "DepotBox Manifest & Lua API Gateway",
+        "service": "AetherVault Steam Manifest & Lua Gateway",
         "status": "online",
+        "version": "2.0.0",
         "documentation": "/docs",
         "endpoints": {
+            "public_trial_key": "/api/v1/auth/public-key",
             "download_manifest_zip": "/api/v1/manifest/{appid}",
             "get_lua_config": "/api/v1/lua/{appid}",
-            "inspect_info": "/api/v1/info/{appid}",
-            "create_api_key": "/api/v1/auth/create-key",
+            "inspect_metadata": "/api/v1/info/{appid}",
             "health_check": "/api/v1/health"
         }
     }
 
 if __name__ == "__main__":
     import uvicorn
-    print(f"🚀 Starting DepotBox API Gateway on {HOST}:{PORT}...")
+    print(f"🚀 Starting AetherVault Gateway on {HOST}:{PORT}...")
     uvicorn.run("app.main:app", host=HOST, port=PORT, reload=False)

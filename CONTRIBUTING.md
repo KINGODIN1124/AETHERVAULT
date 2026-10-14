@@ -27,3 +27,4 @@ Thank you for your interest in contributing to **DepotVault**!
   ```bash
   python cli.py create-key --label "TestKey"
   ```
+
