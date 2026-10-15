@@ -18,13 +18,14 @@
 </p>
 
 <p align="center">
-  <a href="https://discord.gg/rhWuMYnapB"><img src="https://img.shields.io/badge/Discord-Infinity%20Heaven-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
+  <a href="https://discord.gg/rhWuMYnapB"><img src="https://img.shields.io/badge/Discord-Infinity%20Heaven-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Infinity Heaven Discord"></a>
+  <a href="https://discord.gg/crackworld"><img src="https://img.shields.io/badge/Discord-Crack%20World-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Crack World Discord"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-F7DF1E?style=for-the-badge" alt="License"></a>
   <a href="https://swagger.io"><img src="https://img.shields.io/badge/Swagger-OpenAPI%203.0-85EA2D?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger"></a>
   <a href="#"><img src="https://img.shields.io/badge/Status-Online%20(99.9%25)-00C853?style=for-the-badge" alt="Status"></a>
 </p>
 
-[✨ 7-Day Public Trial Key](#-7-day-public-trial-key) • [🎁 1-Month Extended Access](#-want-1-month-extended-access-join-infinity-heaven) • [🏛️ Overview](#-gateway-overview) • [🛠️ Integration Guide](#-integration-guide) • [📡 REST API Reference](#-rest-api-documentation) • [💬 Community](#-official-community)
+[✨ 7-Day Public Trial Key](#-7-day-public-trial-key) • [🎁 1-Month Extended Access](#-want-1-month-extended-access-join-our-discord-communities) • [🏛️ Overview](#-gateway-overview) • [🛠️ Integration Guide](#-integration-guide) • [📡 REST API Reference](#-rest-api-documentation) • [💬 Communities](#-official-communities)
 
 ---
 
@@ -56,22 +57,27 @@ curl -H "X-API-Key: av_public_eyJraWQiOiJiMTQ0OGM3OTBiZTkiLCJsYWJlbCI6IjctRGF5IF
 
 ---
 
-## 🚀 Want 1-Month Extended Access? Join Infinity Heaven!
+## 🚀 Want 1-Month Extended Access? Join Our Discord Communities!
 
-Need more than 10 requests per day for your project? Claim a **1-Month Extended Access Key** with **150 requests / day** for **FREE** by joining the **Infinity Heaven** community:
+Need more than 10 requests per day for your project? Claim a **1-Month Extended Access Key** with **150 requests / day** for **FREE** by joining either **Infinity Heaven** or **Crack World**:
 
 <p align="center">
   <a href="https://discord.gg/rhWuMYnapB">
     <img src="https://img.shields.io/badge/Join%20Infinity%20Heaven-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" height="40" alt="Join Infinity Heaven">
-  </a><br>
-  👉 <a href="https://discord.gg/rhWuMYnapB"><b>https://discord.gg/rhWuMYnapB</b></a>
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://discord.gg/crackworld">
+    <img src="https://img.shields.io/badge/Join%20Crack%20World-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" height="40" alt="Join Crack World">
+  </a>
+  <br><br>
+  👉 <b>Infinity Heaven:</b> <a href="https://discord.gg/rhWuMYnapB">https://discord.gg/rhWuMYnapB</a> &nbsp;•&nbsp; <b>Crack World:</b> <a href="https://discord.gg/crackworld">https://discord.gg/crackworld</a>
 </p>
 
-### Perks of 1-Month Infinity Heaven Key:
+### Perks of 1-Month Community Member Key:
 - ⚡ **150 Requests per day** (15x higher daily quota)
 - 📅 **Valid for 30 Full Days**
 - 🔑 **Dedicated Private API Key**
-- 🚀 **How to claim:** Type `/claimkey` in the bot channel on **Infinity Heaven** to unlock your key in seconds!
+- 🚀 **How to claim:** Type `/claimkey` in the bot channel on either **Infinity Heaven** or **Crack World** to unlock your key in seconds!
 - 🌟 **Server Boosters:** Automatically bypass checkpoints with instant VIP access (200 req/day)!
 
 ---
@@ -263,13 +269,22 @@ curl -H "X-API-Key: YOUR_API_KEY" https://aethervault.zayrixcw.workers.dev/api/v
 
 ---
 
-## 💬 Official Community
+## 💬 Official Communities
 
-Join the **Infinity Heaven** Discord server for updates, 1-month API keys, and community support:
+Join our official Discord communities for updates, 1-month API keys, and community support:
 
-[![Infinity Heaven Discord](https://img.shields.io/badge/Join-Infinity%20Heaven-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/rhWuMYnapB)
-
-**Discord Invite:** [https://discord.gg/rhWuMYnapB](https://discord.gg/rhWuMYnapB)
+<p align="center">
+  <a href="https://discord.gg/rhWuMYnapB">
+    <img src="https://img.shields.io/badge/Join-Infinity%20Heaven-5865F2?style=for-the-badge&logo=discord&logoColor=white" height="35" alt="Infinity Heaven Discord">
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://discord.gg/crackworld">
+    <img src="https://img.shields.io/badge/Join-Crack%20World-5865F2?style=for-the-badge&logo=discord&logoColor=white" height="35" alt="Crack World Discord">
+  </a>
+  <br><br>
+  - **Infinity Heaven Invite:** <a href="https://discord.gg/rhWuMYnapB">https://discord.gg/rhWuMYnapB</a><br>
+  - **Crack World Invite:** <a href="https://discord.gg/crackworld">https://discord.gg/crackworld</a>
+</p>
 
 ---
 
